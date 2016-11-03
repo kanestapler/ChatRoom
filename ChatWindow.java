@@ -39,6 +39,12 @@ public class ChatWindow extends JFrame {
 	}
 	
 	private void CreateWindowLayout() {
+		//Adding ChatName label and input
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		//panel.add(button, gbc);
+		
 		
 	}
 	

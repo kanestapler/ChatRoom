@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JTextPane;
 
 public class MainWindow {
 
@@ -74,10 +75,9 @@ public class MainWindow {
 		frmMulticastChatRoom.getContentPane().add(chatboxPanel);
 		chatboxPanel.setLayout(new BorderLayout(0, 0));
 		
-		JTextArea chatTextArea = new JTextArea();
-		chatboxPanel.add(chatTextArea, BorderLayout.CENTER);
-		chatTextArea.setRows(10);
-		chatTextArea.setColumns(10);
+		JTextPane chatTextPane = new JTextPane();
+		chatTextPane.setEditable(false);
+		chatboxPanel.add(chatTextPane, BorderLayout.CENTER);
 		
 		JPanel messagePanel = new JPanel();
 		messagePanel.setBounds(0, 339, 544, 49);
@@ -110,7 +110,7 @@ public class MainWindow {
 		portTextField.setColumns(10);
 		
 		JLabel lblChatGroupId = new JLabel("Chat Group ID");
-		lblChatGroupId.setBounds(0, 15, 69, 14);
+		lblChatGroupId.setBounds(0, 15, 86, 14);
 		addressInfoPanel.add(lblChatGroupId);
 		
 		JLabel lblPort = new JLabel("Port");

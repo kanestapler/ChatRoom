@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -22,6 +23,9 @@ public class MainWindow {
 	private JTextField chatGroupIDTextField;
 	private JTextField portTextField;
 	private JTextPane chatTextPane;
+	private JButton btnSendMessage;
+	
+	private MulticastThread castThread;
 
 	/**
 	 * Launch the application.
@@ -133,7 +137,7 @@ public class MainWindow {
             }
         });
 		
-		JButton btnSendMessage = new JButton("SEND MESSAGE");
+		btnSendMessage = new JButton("SEND MESSAGE");
 		btnSendMessage.setBounds(178, 11, 118, 39);
 		buttonPanel.add(btnSendMessage);
 		btnSendMessage.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +145,7 @@ public class MainWindow {
                 sendMessageButton(evt);
             }
         });
+		btnSendMessage.setEnabled(false);
 		
 		JButton btnLeaveChat = new JButton("LEAVE CHAT");
 		btnLeaveChat.setBounds(10, 61, 125, 35);
@@ -162,25 +167,35 @@ public class MainWindow {
 	}
 	
 	private void joinChatButton(ActionEvent evt) {
-		
+		btnSendMessage.setEnabled(true);
+		String ip = chatGroupIDTextField.getText();
+		int portNumber = Integer.parseInt(portTextField.getText());
+		try {
+			castThread = new MulticastThread(portNumber, ip, this);
+			new Thread(castThread).start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void sendMessageButton(ActionEvent evt) {
-		
+		String name = nameTextField.getText();
+		String message = messageTextField.getText();
+		String fullMessage ="\n" + name + "> " + message;
+		castThread.send(fullMessage);
 	}
 	
 	private void leaveChatButton(ActionEvent evt) {
-		
+		btnSendMessage.setEnabled(false);
+		castThread.stop();
 	}
 	
 	private void exitButton(ActionEvent evt) {
-		
+		System.exit(0);
 	}
 	
-	public void recieveMessage(String[] s) {
-        String user = s[0].trim();
-        String message = s[1].trim();
-        String compiled = "\n" + user + ": " + message;
-        chatTextPane.setText(chatTextPane.getText() + compiled);
+	public void recieveMessage(String s) {
+        chatTextPane.setText(chatTextPane.getText() + s);
     }
 }

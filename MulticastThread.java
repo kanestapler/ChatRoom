@@ -50,8 +50,7 @@ public class MulticastThread implements Runnable {
                 dp = new DatagramPacket(bytes, bytes.length);
                 socket.receive(dp);
                 String packet = new String(dp.getData(), "8859_1");
-                String[] info = packet.split("\\$\\$\\@\\#\\$");
-                messenger.recieveMessage(info);
+                messenger.recieveMessage(packet);
             } catch (IOException ex) {
                 Logger.getLogger(MulticastThread.class.getName()).log(Level.SEVERE, null, ex);
             }

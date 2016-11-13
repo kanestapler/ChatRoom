@@ -1,10 +1,11 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
@@ -20,6 +21,7 @@ public class MainWindow {
 	private JTextField messageTextField;
 	private JTextField chatGroupIDTextField;
 	private JTextField portTextField;
+	private JTextPane chatTextPane;
 
 	/**
 	 * Launch the application.
@@ -75,7 +77,7 @@ public class MainWindow {
 		frmMulticastChatRoom.getContentPane().add(chatboxPanel);
 		chatboxPanel.setLayout(new BorderLayout(0, 0));
 		
-		JTextPane chatTextPane = new JTextPane();
+		chatTextPane = new JTextPane();
 		chatTextPane.setEditable(false);
 		chatboxPanel.add(chatTextPane, BorderLayout.CENTER);
 		
@@ -125,17 +127,60 @@ public class MainWindow {
 		JButton btnJoinChat = new JButton("JOIN CHAT");
 		btnJoinChat.setBounds(10, 11, 125, 39);
 		buttonPanel.add(btnJoinChat);
+		btnJoinChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                joinChatButton(evt);
+            }
+        });
 		
 		JButton btnSendMessage = new JButton("SEND MESSAGE");
 		btnSendMessage.setBounds(178, 11, 118, 39);
 		buttonPanel.add(btnSendMessage);
+		btnSendMessage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                sendMessageButton(evt);
+            }
+        });
 		
 		JButton btnLeaveChat = new JButton("LEAVE CHAT");
 		btnLeaveChat.setBounds(10, 61, 125, 35);
 		buttonPanel.add(btnLeaveChat);
+		btnLeaveChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                leaveChatButton(evt);
+            }
+        });
 		
 		JButton btnExit = new JButton("EXIT");
 		btnExit.setBounds(178, 61, 118, 35);
 		buttonPanel.add(btnExit);
+		btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                exitButton(evt);
+            }
+        });
 	}
+	
+	private void joinChatButton(ActionEvent evt) {
+		
+	}
+	
+	private void sendMessageButton(ActionEvent evt) {
+		
+	}
+	
+	private void leaveChatButton(ActionEvent evt) {
+		
+	}
+	
+	private void exitButton(ActionEvent evt) {
+		
+	}
+	
+	public void recieveMessage(String[] s) {
+        String user = s[0].trim();
+        String message = s[1].trim();
+        String compiled = "\n" + user + ": " + message;
+        chatTextPane.setText(chatTextPane.getText() + compiled);
+    }
 }
